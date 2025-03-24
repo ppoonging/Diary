@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-5" style="max-width: 500px; background-color: #fffbea; padding: 30px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+
+    <!-- 제목 -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold"> 로그인</h2>
+        <p class="text-muted">나의 일기장에 들어가려면 로그인 해주세요</p>
+    </div>
+
+    <!-- 로그인 폼 -->
+    <form th:action="@{/user/login}" method="post">
+
+        <!-- 로그인 실패 메시지 -->
+        <div th:if="${param.error}" class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+            <span>❌</span>
+            <span>ID 또는 PASSWORD가 틀렸습니다.</span>
+        </div>
+
+        <!-- 아이디 입력 -->
+        <div class="mb-3">
+            <label for="username" class="form-label">아이디</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="아이디를 입력하세요">
+        </div>
+
+        <!-- 비밀번호 입력 -->
+        <div class="mb-4">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호를 입력하세요">
+        </div>
+
+        <!-- 로그인 버튼 -->
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </div>
+    </form>
+
+    <!-- 네이버 로그인 -->
+    <div class="text-center mt-4">
+        <a th:href="@{'/user/naverlogin'}" class="btn btn-outline-success">
+            ✅ 네이버로 로그인
+        </a>
+    </div>
+</div>
+</html>

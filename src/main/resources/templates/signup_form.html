@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-5" style="max-width: 600px; background-color: #fffbea; padding: 30px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+
+    <!-- 헤더 -->
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">📋 회원가입</h2>
+        <p class="text-muted">나에 일기를 함께할 준비 되셨나요?</p>
+    </div>
+
+    <form th:action="@{/user/signup}" method="post" th:object="${siteUserForm}">
+
+        <!-- 아이디 -->
+        <div class="mb-3">
+            <label for="username" class="form-label">아이디</label>
+            <input type="text" name="username" id="username" class="form-control" th:field="*{username}">
+            <div class="text-danger small" th:if="${#fields.hasErrors('username')} "th:errors="*{username}"></div>
+        </div>
+
+        <!-- 비밀번호 -->
+        <div class="mb-3">
+            <label for="password1" class="form-label">비밀번호</label>
+            <input type="password" name="password1" id="password1" class="form-control" th:field="*{password1}">
+            <div class="text-danger small" th:if="${#fields.hasErrors('password1')} "th:errors="*{password1}"></div>
+        </div>
+
+        <!-- 비밀번호 확인 -->
+        <div class="mb-3">
+            <label for="password2" class="form-label">비밀번호 확인</label>
+            <input type="password" name="password2" id="password2" class="form-control" th:field="*{password2}">
+            <div class="text-danger small" th:if="${#fields.hasErrors('password2')} "th:errors="*{password2}"></div>
+        </div>
+        <!-- 닉네임 -->
+        <div class="mb-3">
+            <label for="myName" class="form-label">닉네임</label>
+            <input type="text" name="myName" id="myName" class="form-control" th:field="*{myName}">
+            <div class="text-danger small" th:if="${#fields.hasErrors('myName')} "th:errors="*{myName}"></div>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="mb-3">
+            <label for="email" class="form-label">이메일</label>
+            <input type="email" name="email" id="email" class="form-control" th:field="*{email}">
+            <div class="text-danger small" th:if="${#fields.hasErrors('email')} "th:errors="*{email}"></div>
+        </div>
+
+        <!-- 휴대폰 번호 -->
+        <div class="mb-4">
+            <label for="phoneNumber" class="form-label">휴대폰 번호</label>
+            <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" th:field="*{phoneNumber}">
+            <div class="text-danger small" th:if="${#fields.hasErrors('phoneNumber')} "th:errors="*{phoneNumber}"></div>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <input type="submit" class="btn btn-primary" value="가입하기">
+        </div>
+    </form>
+</div>
+</html>

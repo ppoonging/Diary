@@ -1,0 +1,32 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-5 d-flex justify-content-center">
+
+    <div class="card shadow-sm border-0 w-100" style="max-width: 720px; background-color: #fffdf5; border-radius: 1rem;">
+        <div class="card-body p-4">
+
+            <!-- 내 달력 날짜 -->
+            <div class="mb-3 text-secondary fw-semibold">
+                <span th:text="  ${diary.selectedDate} + ' 에 일기 '"></span>
+            </div>
+
+            <!-- 제목 -->
+
+
+            <!-- 본문 내용 -->
+            <div class="card-text fs-5" style="white-space: pre-line;" th:text="${diary.content}"></div>
+
+            <!-- 작성자 / 작성일 -->
+            <div class="d-flex justify-content-end mt-4">
+                <div class="text-end">
+                    <div class="fw-semibold text-muted small">
+                        작성자: <span th:if="${diary.author != null}" th:text="${diary.author.username}"></span>
+                    </div>
+                    <div class="text-muted small" th:text="${#temporals.format(diary.createDateTime, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</html>

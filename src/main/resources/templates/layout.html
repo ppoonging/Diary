@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <!--Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,
+    initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/index.css}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS + Datepicker JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.ko.min.js"></script>
+
+
+    <script th:src="@{/bootstrap.min.js}"></script>
+   <script th:src="@{/bootstrap.bundle.min.js}"></script>
+    <!--Bootatrap CSS-->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+
+    <title>일기장 프로그램</title>
+
+
+</head>
+
+
+
+<body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+
+
+<th:block layout:fragment="content"></th:block>
+
+<script layout:fragment="script"></script>
+<!--드랍다운 사용-->
+
+<!--자바 스트립트
+<script th:src="@{/mix.js}"></script>
+-->
+<!--네비게이션-->
+
+<script>
+    // 전역 함수로 선언되어야 함
+    function getWeather(city) {
+        $.ajax({
+            url: `/weather?location=${city}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (!data || !data.weatherData) {
+                    alert("날씨 데이터를 불러올 수 없습니다.");
+                    return;
+                }
+
+                $("#weatherIcon")
+                    .attr("src", data.weatherIcon || "/images/default-weather.png")
+                    .show();
+
+                $("#weatherTemp")
+                    .text(data.weatherData.main.temp + ' °C')
+                    .show();
+            },
+            error: function () {
+                $("#weatherTemp").text("에러").show();
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

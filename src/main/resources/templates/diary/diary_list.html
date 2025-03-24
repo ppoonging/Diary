@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-5" style="background-color: #fffbea; border-radius: 15px; padding: 30px;">
+
+    <!-- 타이틀 -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">📚 나의 일기 목록</h2>
+        <p class="text-muted">기록해온 나의 순간들을 다시 만나보세요.</p>
+    </div>
+
+    <!-- 일기 카드 리스트 -->
+    <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+        <div class="col" th:each="diary, loop : ${paging}">
+            <div class="card h-100 shadow-sm">
+                <div class="card h-100 shadow-sm position-relative">
+                    <div class="card-body d-flex flex-column">
+
+                        <!-- 달력 -->
+                        <h6 class="card-subtitle mb-4 text-muted">
+                            <span th:text="'🗓️: ' + ${diary.selectedDate}"></span>
+                        </h6>
+                        <!--제목-->
+                        <h5 class="card-title">
+                            <div th:href="@{/diary/detail}" th:text="${diary.subject}" class="text-decoration-none text-dark">
+                            </div>
+                        </h5>
+
+
+                        <!-- 내용 (요약 표시) -->
+                        <p class="card-text text-truncate mb-lg-5" th:text="${diary.content}" style="max-height: 80px;"></p>
+                        <!-- 자세히 보기 버튼 (하단 우측) -->
+                        <div class="mt-auto text-end ">
+                            <a th:href="@{|/diary/detail/${diary.id}|}" class="btn btn-outline-primary btn-sm">자세히 보기</a>
+                        </div>
+                        <!-- 작성일 (왼쪽 아래 고정) -->
+                        <span class="position-absolute text-muted small"
+                              style="bottom: 10px; left: 15px; font-size: 0.8rem; color: rgba(153, 153, 153, 0.6);"
+                              th:text="'작성일: ' + ${#temporals.format(diary.createDateTime, 'yyyy-MM-dd HH:mm')}
+                              + ' | 작성자: ' + ${diary.author?.myName}">
+
+
+</span>
+
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 버튼 영역 -->
+    <div class="d-flex justify-content-center gap-3">
+        <a th:href="@{/diary/create}" class="btn btn-primary">✏️ 일기 작성하기</a>
+        <a th:href="@{/diary/main}" class="btn btn-outline-secondary">뒤로가기</a>
+    </div>
+
+</div>
+</html>
