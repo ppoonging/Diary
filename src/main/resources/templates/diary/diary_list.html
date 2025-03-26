@@ -8,6 +8,21 @@
         <h2 class="fw-bold">📚 나의 일기 목록</h2>
         <p class="text-muted">기록해온 나의 순간들을 다시 만나보세요.</p>
     </div>
+    <div class="mood-score-box">
+        <h3>오늘의 기분지수 🧠</h3>
+        <p th:text="'기분지수: ' + ${mScore} + '점'"></p>
+
+        <p th:if="${mScore} >= 1">🌞 오늘은 좋은 기분이에요!</p>
+        <p th:if="${mScore} == 0">😐 평범한 하루네요.</p>
+        <p th:if="${mScore} < 0">☔ 기분이 조금 가라앉는 날이에요.</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">😄 내 한 달 평균 기분 지수</h5>
+            <p class="card-text fs-3 text-primary fw-bold" th:text="${myMood}">0</p>
+        </div>
+    </div>
 
     <!-- 일기 카드 리스트 -->
     <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">

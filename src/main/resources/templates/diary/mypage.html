@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-5"
+     style="background-color: #fffbea; border-radius: 15px; padding: 30px;">
+
+
+    <div class="container mt-5">
+        <h2 class="mb-4">✨ 마이페이지 - 나의 일기 목록</h2>
+
+        <!-- 기분 지수 -->
+
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title">오늘의 전체 기분지수 😊</h5>
+                        <p class="card-text" th:text="${mScore} + '점'">3점</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">이번 달 나의 평균 기분지수 🌤</h5>
+                        <p class="card-text" th:text="${myMood} + '점'">4점</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 나의 일기 카드 목록 -->
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col" th:each="diary : ${paging.content}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${diary.subject}">제목</h5>
+                        <p class="card-text">
+                            날짜: <span th:text="${#temporals.format(diary.selectedDate, 'yyyy-MM-dd')}">2025-03-26</span><br/>
+                           나의 날씨: <span th:text="${diary.weather}">맑음</span>
+                        </p>
+                        <a th:href="@{/diary/detail/{id}(id=${diary.id})}" class="btn btn-outline-primary">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이징 -->
+        <div class="d-flex justify-content-center mt-4">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${paging.first} ? 'disabled'">
+                    <a class="page-link" th:href="@{/diary/mylist(page=${paging.number - 1})}">«</a>
+                </li>
+                <li th:each="page : ${#numbers.sequence(0, paging.totalPages - 1)}"
+                    th:classappend="${page == paging.number} ? 'active'" class="page-item">
+                    <a class="page-link" th:href="@{/diary/mylist(page=${page})}" th:text="${page+1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${paging.last} ? 'disabled'">
+                    <a class="page-link" th:href="@{/diary/mylist(page=${paging.number + 1})}">»</a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+</html>

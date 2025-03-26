@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,11 +55,34 @@ public class DiaryController {
 
     }
 
-     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value = "page",defaultValue = "0") int page) {
-        Page<Diary> paging =  this.diaryService.getList(page);
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/list")
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page, Principal principal) {
+
+        Page<Diary> paging = this.diaryService.getList(page);
+
+        String username = principal.getName();
+        int mScore = diaryService.weatherScore();
+        int myMood = diaryService.getUserMood(username);
+
+        model.addAttribute("mScore", mScore);// 오늘 기분지수
+        model.addAttribute("myMood", myMood); //로그인한 유저 기분지수
         model.addAttribute("paging", paging);
+
         return "diary/diary_list";
+    }
+
+    @GetMapping("/mylist")
+    public String myList(Model model, @RequestParam(value = "page", defaultValue = "0") int page, Principal principal) {
+        String username = principal.getName();
+        Page<Diary> myPaging = this.diaryService.getMyList(username, page);
+
+        int mScore = diaryService.weatherScore();
+        int myMood = diaryService.getUserMood(username);
+        model.addAttribute("paging", myPaging);
+        model.addAttribute("mScore", mScore);
+        model.addAttribute("myMood", myMood);
+        return "diary/mypage"; // 같은 템플릿 재사용 가능
     }
 
     @GetMapping("/detail/{id}")
