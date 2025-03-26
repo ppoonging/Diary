@@ -18,8 +18,6 @@ public interface DiaryRepository extends JpaRepository<Diary, String> {
 
     Page<Diary> findByUsername(String username, Pageable pageable);
 
-
-
     Optional<Diary> findById(Integer id);
 
     /*오늘 기분지수*/
@@ -32,5 +30,9 @@ public interface DiaryRepository extends JpaRepository<Diary, String> {
                                             @Param("start") LocalDate start,
                                             @Param("end") LocalDate end);
 
+    /*모든 유저 기분지수*/
+    @Query("SELECT d.weather FROM Diary d WHERE d.selectedDate BETWEEN :start AND :end")
+    List<String> findWeathersByMonth(@Param("start") LocalDate start,
+                                     @Param("end") LocalDate end);
 
 }

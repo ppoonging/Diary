@@ -60,6 +60,7 @@ public class DiaryService {
         }
     }
 
+    /*오늘 작성한 일기에 날씨를 가져와 점수를 매기게 만들었음*/
     public int weatherScore() {
         List<String> dayWeather = diaryRepository.findTodayWeathers();
 
@@ -67,36 +68,36 @@ public class DiaryService {
         for (String weather : dayWeather) {
             switch (weather) {
                 case "맑음":
-                    totalScore += 2;
+                    totalScore += 5;
                     break;
                 case "흐림":
-                    totalScore += 0;
-                    break;
-                case "비":
-                    totalScore -= 1;
-                    break;
-                case "눈":
                     totalScore += 1;
                     break;
+                case "비":
+                    totalScore -= 3;
+                    break;
+                case "눈":
+                    totalScore += 3;
+                    break;
                 case "바람":
-                    totalScore -= 1;
+                    totalScore -= 2;
                     break;
             }
         }
         return dayWeather.size() == 0 ? 0 : totalScore / dayWeather.size();
 
     }
-
+/*이번달 일기를 가져와 점수를 매김 단 작성자에 한함*/
     public int getUserMood(String username) {
         LocalDate now = LocalDate.now();
         LocalDate start = now.withDayOfMonth(1);
         LocalDate end = now.withDayOfMonth(now.lengthOfMonth());
-        System.out.println("유저:@@@@@@ " + username);
+        System.out.println("유저: " + username);
 
         List<String> weather = diaryRepository.findWeathersByUserAndMonth(username, start, end);
         return calculateMoodScore(weather);
     }
-
+    /*계산방식 이번달 작성자 기분*/
     public int calculateMoodScore(List<String> weathers) {
         int total = 0;
         int count = 0;
@@ -104,13 +105,25 @@ public class DiaryService {
             if (weather == null) continue;  // null 체크 추가
 
             switch (weather) {
-                case "맑음" -> total += 2;
-                case "눈" -> total += 1;
+                case "맑음" -> total += 5;
+                case "눈" -> total += 3;
                 case "흐림" -> total += 0;
-                case "비", "바람" -> total -= 1;
+                case "비" -> total -= 3;
+                case  "바람" -> total -= 2;
             }
             count++;
         }
         return weathers.isEmpty() ? 0 : total / weathers.size();
     }
+    /*모든 유저의 일기중 이번달에 작성한거 가져와서 평균*/
+    public int getAllMonthlyMood() {
+        LocalDate now = LocalDate.now();
+        LocalDate start = now.withDayOfMonth(1);
+        LocalDate end = now.withDayOfMonth(now.lengthOfMonth());
+
+        List<String> weather = diaryRepository.findWeathersByMonth(start, end);
+        return calculateMoodScore(weather);
+    }
+
+
 }

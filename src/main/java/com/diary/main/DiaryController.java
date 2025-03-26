@@ -59,19 +59,19 @@ public class DiaryController {
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page, Principal principal) {
 
-        Page<Diary> paging = this.diaryService.getList(page);
 
+        Page<Diary> paging = this.diaryService.getList(page);
         String username = principal.getName();
         int mScore = diaryService.weatherScore();
         int myMood = diaryService.getUserMood(username);
-
+        int allMood = diaryService.getAllMonthlyMood();
         model.addAttribute("mScore", mScore);// 오늘 기분지수
         model.addAttribute("myMood", myMood); //로그인한 유저 기분지수
+        model.addAttribute("allMood", allMood);//이번달 모든 유저 기분지수
         model.addAttribute("paging", paging);
 
         return "diary/diary_list";
     }
-
     @GetMapping("/mylist")
     public String myList(Model model, @RequestParam(value = "page", defaultValue = "0") int page, Principal principal) {
         String username = principal.getName();
