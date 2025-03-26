@@ -11,33 +11,50 @@
     </div>
 
     <!-- 카드 영역 -->
-    <section class="row justify-content-center gap-4">
+    <section class="row g-4">
 
-        <!-- 오늘 일기 작성 카드 -->
-        <div class="card1 shadow-sm p-0" style="width: 18rem; height: 24rem;">
-            <img th:src="@{/2025-01-04.01.jpeg}" class="card-img-top"
-                 style="height: 13rem; object-fit: cover; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                 alt="오늘 일기 이미지">
-            <div class="card-body d-flex flex-column" style="height: 8rem;">
-                <h5 class="card-title1">✏️ 오늘 일기</h5>
-                <p class="card-text1">오늘의 느낌과 생각을 따뜻하게 남겨보세요.</p>
-                <a th:href="@{/diary/create}" class="btn btn1 mt-auto">하루를 마무리</a>
+        <!-- 왼쪽: 오늘 일기 (크게) -->
+        <div class="col-md-6">
+            <div class="card shadow-lg rounded-4 border-0 h-100" style="background-color: #fffdf7;">
+                <img th:src="@{/2025-01-04.01.jpeg}" class="card-img-top rounded-top-4" style="height: 470px; object-fit: cover;" alt="오늘 일기 이미지">
+                <div class="card-body d-flex flex-column justify-content-end p-4" style="height: 100%;">
+                    <div>
+                        <h5 class="card-title fw-bold">✏️ 오늘의 일기</h5>
+                        <p class="card-text text-muted">오늘의 날씨처럼 내 감정도 담아보세요.</p>
+                    </div>
+                    <a th:href="@{/diary/create}" class="btn btn-outline-primary mt-3">오늘을 기록하기</a>
+                </div>
             </div>
         </div>
 
-        <!-- 일기 목록 카드 -->
-        <div class="card1 shadow-sm p-0" style="width: 18rem; height: 24rem;">
-            <img th:src="@{/2025-01-04.01.jpeg}" class="card-img-top"
-                 style="height: 13rem; object-fit: cover; border-top-left-radius: 20px; border-top-right-radius: 20px;"
-                 alt="일기 목록 이미지">
-            <div class="card-body d-flex flex-column" style="height: 8rem;">
-                <h5 class="card-title1">📖 일기 목록</h5>
-                <p class="card-text1">지나간 나를 돌아보며 마음을 다독여 보세요.</p>
-                <a th:href="@{/diary/list}" class="btn btn1 mt-auto">그날을 떠올리며</a>
+        <!-- 오른쪽: 두 개 카드 위아래 배치 -->
+        <div class="col-md-6 d-flex flex-column gap-4">
+
+            <!-- 📖 전체 일기 -->
+            <div class="card shadow rounded-4 border-0" style="background-color: #f8f9fa; ;" >
+                <img th:src="@{/IMG_9861.jpeg}" class="card-img-top rounded-top-4" style="height: 15rem; object-fit: cover;" alt="일기 목록 이미지">
+                <div class="card-body d-flex flex-column p-4">
+                    <h5 class="card-title fw-bold">📖 전체 일기</h5>
+                    <p class="card-text text-muted">모두의 일기를 보며 다양한 날씨를 느껴보세요.</p>
+                    <a th:href="@{/diary/list}" class="btn btn-outline-secondary mt-auto btn-sm">모두의 기록 보기</a>
+                </div>
             </div>
+
+            <!-- 🙋 마이페이지 -->
+            <div class="card shadow rounded-4 border-0" style="background-color: #eef2ff;">
+                <img th:src="@{/IMG_2485.jpeg}" class="card-img-top rounded-top-4" style="height: 10rem; object-fit: cover;" alt="마이페이지 이미지">
+                <div class="card-body d-flex flex-column p-3">
+                    <h5 class="card-title fw-bold">🙋 나의 마이페이지</h5>
+                    <p class="card-text text-muted">내가 남긴 일기들과 평균 기분지수를 확인해보세요.</p>
+                    <a th:href="@{/diary/mylist}" class="btn btn-outline-dark mt-auto btn-sm">마이페이지 가기</a>
+                </div>
+            </div>
+
         </div>
 
     </section>
+
+
 </div>
 
 </html>

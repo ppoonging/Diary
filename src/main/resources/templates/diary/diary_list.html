@@ -33,38 +33,49 @@
 
     <!-- 일기 카드 리스트 -->
     <div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
-        <div class="col" th:each="diary, loop : ${paging}">
+        <div class="col" th:each="diary, loop : ${paging}"
+        th:if="${diary.username != #authentication.name}">
+            <!--내꺼 빼고, 즉 현재 로그인한사람꺼 빼고 다른사람들꺼 보이게-->
             <div class="card h-100 shadow-sm">
-                <div class="card h-100 shadow-sm position-relative">
-                    <div class="card-body d-flex flex-column">
+                <div class="card-body d-flex flex-column position-relative"style="min-height: 150px;">
 
-                        <!-- 달력 -->
-                        <h6 class="card-subtitle mb-4 text-muted">
-                            <span th:text="'🗓️: ' + ${diary.selectedDate}"></span>
-                        </h6>
-                        <!--제목-->
-                        <h5 class="card-title">
-                            <div th:href="@{/diary/detail}" th:text="${diary.subject}"
-                                 class="text-decoration-none text-dark">
-                            </div>
-                        </h5>
+                    <!-- 🗓️ 달력 날짜 -->
+                    <h6 class="card-subtitle mb-4 text-muted">
+                        <span th:text="'🗓️: ' + ${diary.selectedDate}"></span>
+                    </h6>
 
+                    <!-- 제목 -->
+                   <!-- <h5 class="card-title">
+                        <div th:text="${diary.subject}" class="text-decoration-none text-dark"></div>
+                    </h5>
+-->
+                    <!-- 🌤️ 감성 날씨 메시지 -->
+                    <p class="card-text mb-2" th:switch="${diary.weather}">
+                        <span th:case="'맑음'"><span style="font-size: 20px; font-weight: bold;"th:text="${diary.author.myName}">님은</span>  오늘 맑고 화창한 하루! ☀️</span>
+                        <span th:case="'흐림'"><span style="font-size: 20px; font-weight: bold;" th:text="${diary.author.myName}">님은</span>  오늘 꾸릉꾸릉한 날....🌫️</span>
+                        <span th:case="'비'"><span style="font-size: 20px; font-weight: bold;" th:text="${diary.author.myName}">님은</span>  오늘 비가오듯 처지는날...☔️</span>
+                        <span th:case="'눈'"><span style="font-size: 20px; font-weight: bold;" th:text="${diary.author.myName}">님은</span>  오늘 눈 내리는 설레임 ❄️</span>
+                        <span th:case="'바람'"><span style="font-size: 20px; font-weight: bold;" th:text="${diary.author.myName}">님은</span>  오늘 찬바람이...🍃</span>
+                        <span th:case="*"><span style="font-size: 20px; font-weight: bold;" th:text="${diary.author.myName}">님은</span>  오늘의 날씨를 입력하지 않았어요 🌈 </span>
+                    </p>
 
-                        <!-- 내용 (요약 표시) -->
-                        <p class="card-text text-truncate mb-lg-5" th:text="${diary.content}"
-                           style="max-height: 80px;"></p>
-                        <!-- 자세히 보기 버튼 (하단 우측) -->
-                        <div class="mt-auto text-end ">
-                            <a th:href="@{|/diary/detail/${diary.id}|}" class="btn btn-outline-primary btn-sm">자세히
-                                보기</a>
-                        </div>
-                        <!-- 작성일 (왼쪽 아래 고정) -->
-                        <span class="position-absolute text-muted small"
-                              style="bottom: 10px; left: 15px; font-size: 0.8rem; color: rgba(153, 153, 153, 0.6);"
-                              th:text="'작성일: ' + ${#temporals.format(diary.createDateTime, 'yyyy-MM-dd HH:mm')}
-                              + ' | 작성자: ' + ${diary.author?.myName}"></span>
+                    <!-- 내용 (요약 표시) -->
+                    <!--<p class="card-text text-truncate mb-lg-5" th:text="${diary.content}"
+                       style="max-height: 80px;"></p>-->
+
+                    <!-- 자세히 보기 버튼 (하단 우측) - 작성자만 보임 -->
+                    <div class="mt-auto text-end">
+                        <a th:href="@{/diary/detail/{id}(id=${diary.id})}"
+                                class="btn btn-outline-primary btn-sm">자세히 보기</a>
                     </div>
+
+                    <!-- 작성일 & 작성자 (왼쪽 아래 고정) -->
+                    <span class="position-absolute text-muted small"
+                          style="bottom: 10px; left: 15px; font-size: 0.8rem; color: rgba(153, 153, 153, 0.6);"
+                          th:text="'작성일: ' + ${#temporals.format(diary.createDateTime, 'yyyy-MM-dd HH:mm')}
+                  + ' | 작성자: ' + ${diary.author?.myName}"></span>
                 </div>
+
             </div>
         </div>
     </div>

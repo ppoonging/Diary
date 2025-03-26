@@ -72,6 +72,7 @@ public class DiaryController {
 
         return "diary/diary_list";
     }
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/mylist")
     public String myList(Model model, @RequestParam(value = "page", defaultValue = "0") int page, Principal principal) {
         String username = principal.getName();
