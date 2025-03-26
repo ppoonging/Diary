@@ -37,5 +37,19 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
+            echo "::group::🛑 기존 서버 프로세스 종료"
             pkill -f 'java -jar' || true
+            echo "::endgroup::"
+
+            echo "::group::🚀 Spring Boot 앱 실행"
             nohup java -jar ~/diary-0.0.1-SNAPSHOT.jar > log.txt 2>&1 &
+            sleep 3
+            echo "::endgroup::"
+
+            echo "::group::📋 실행 중인 java 프로세스"
+            pgrep -fl java || echo "❌ 실행 안 됨"
+            echo "::endgroup::"
+
+            echo "::group::📄 최근 서버 로그 (log.txt)"
+            tail -n 20 log.txt || echo "❌ 로그 없음"
+            echo "::endgroup::"
