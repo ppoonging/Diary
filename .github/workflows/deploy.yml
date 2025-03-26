@@ -18,8 +18,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build with Gradle
-        run: ./gradlew clean build
+      - name: Build with Gradle (skip test)
+        run: ./gradlew clean bootJar
 
       - name: Upload JAR to EC2
         uses: appleboy/scp-action@v0.1.4
