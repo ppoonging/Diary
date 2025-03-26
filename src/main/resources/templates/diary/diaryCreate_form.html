@@ -26,11 +26,11 @@
                 <label for="weather" class="form-label">🌤️ 오늘의 날씨</label>
                 <select name="weather" id="weather" class="form-select">
                     <option value="">날씨를 선택하세요</option>
-                    <option value="sunny">맑음 ☀️</option>
-                    <option value="cloudy">흐림 ☁️</option>
-                    <option value="rainy">비 ☔️</option>
-                    <option value="snowy">눈 ❄️</option>
-                    <option value="windy">바람 💨</option>
+                    <option value="맑음">맑음 ☀️</option>
+                    <option value="흐림">흐림 ☁️</option>
+                    <option value="비">비 ☔️</option>
+                    <option value="눈">눈 ❄️</option>
+                    <option value="바람">바람 💨</option>
                 </select>
                 <p id="weatherMessage" class="text-muted small" style="font-style: italic; margin-top: 10px;">날씨를 선택해주세요.</p>
             </div>
@@ -53,8 +53,9 @@
             <input type="submit" class="btn btn-primary px-4" value="일기 기록">
             <a th:href="@{/diary/main}" class="btn btn-outline-secondary px-4">뒤로가기</a>
         </div>
-
     </form>
+
+
 </div>
 </html>
 
@@ -87,19 +88,19 @@
             let weatherMessage = '';
 
             switch (selectedWeather) {
-                case 'sunny':
+                case '맑음':
                     weatherMessage = '오늘의 기분은 맑고 화창한 날이네요! ';
                     break;
-                case 'cloudy':
+                case '흐림':
                     weatherMessage = '오늘의 기분은 꾸릉꾸릉 이네요. ';
                     break;
-                case 'rainy':
+                case '비':
                     weatherMessage = '오늘의 기분은 축~ 처지는 날이군요 ';
                     break;
-                case 'snowy':
+                case '눈':
                     weatherMessage = '오늘의 기분은 눈이 오는 설렘인가요?! ';
                     break;
-                case 'windy':
+                case '바람':
                     weatherMessage = '오늘의 기분은 바람이 몰아쳤나요?';
                     break;
                 default:

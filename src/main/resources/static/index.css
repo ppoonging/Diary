@@ -27,3 +27,34 @@
     box-shadow: none;
     transform: translateY(4px);
 }
+
+
+.card1 {
+    background-color: #fffdf5;
+    border-radius: 20px;
+    border: none;
+    transition: transform 0.3s ease;
+}
+
+.card1:hover {
+    transform: scale(1.03);
+}
+
+.card-title1 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card-text1 {
+    font-size: 0.95rem;
+}
+
+.btn1- {
+    background-color: #f0c987;
+    border: none;
+    font-weight: bold;
+}
+
+.btn1:hover {
+    background-color: #e0b670;
+}

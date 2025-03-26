@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-5" style="background-color: #fffbea; border-radius: 15px; padding: 30px;">
+<div layout:fragment="content" class="container my-5"
+     style="background-color: #fffbea; border-radius: 15px; padding: 30px;">
 
     <!-- 타이틀 -->
     <div class="text-center mb-5">
@@ -21,32 +22,27 @@
                         </h6>
                         <!--제목-->
                         <h5 class="card-title">
-                            <div th:href="@{/diary/detail}" th:text="${diary.subject}" class="text-decoration-none text-dark">
+                            <div th:href="@{/diary/detail}" th:text="${diary.subject}"
+                                 class="text-decoration-none text-dark">
                             </div>
                         </h5>
 
 
                         <!-- 내용 (요약 표시) -->
-                        <p class="card-text text-truncate mb-lg-5" th:text="${diary.content}" style="max-height: 80px;"></p>
+                        <p class="card-text text-truncate mb-lg-5" th:text="${diary.content}"
+                           style="max-height: 80px;"></p>
                         <!-- 자세히 보기 버튼 (하단 우측) -->
                         <div class="mt-auto text-end ">
-                            <a th:href="@{|/diary/detail/${diary.id}|}" class="btn btn-outline-primary btn-sm">자세히 보기</a>
+                            <a th:href="@{|/diary/detail/${diary.id}|}" class="btn btn-outline-primary btn-sm">자세히
+                                보기</a>
                         </div>
                         <!-- 작성일 (왼쪽 아래 고정) -->
                         <span class="position-absolute text-muted small"
                               style="bottom: 10px; left: 15px; font-size: 0.8rem; color: rgba(153, 153, 153, 0.6);"
                               th:text="'작성일: ' + ${#temporals.format(diary.createDateTime, 'yyyy-MM-dd HH:mm')}
-                              + ' | 작성자: ' + ${diary.author?.myName}">
-
-
-</span>
-
-
-
-
+                              + ' | 작성자: ' + ${diary.author?.myName}"></span>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -55,6 +51,26 @@
     <div class="d-flex justify-content-center gap-3">
         <a th:href="@{/diary/create}" class="btn btn-primary">✏️ 일기 작성하기</a>
         <a th:href="@{/diary/main}" class="btn btn-outline-secondary">뒤로가기</a>
+    </div>
+
+    <!--네이지 네이션 가져다씀-->
+    <div class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${paging.first} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/diary/list(page=${paging.number-1}, kw=${kw}, searchType=${searchType}, sort=${sort})}">«</a>
+            </li>
+            <li th:each="page : ${#numbers.sequence(0, paging.totalPages - 1)}"
+                th:classappend="${page == paging.number} ? 'active'" class="page-item">
+                <a class="page-link"
+                   th:href="@{/diary/list(page=${page}, kw=${kw}, searchType=${searchType}, sort=${sort})}"
+                   th:text="${page+1}"></a>
+            </li>
+            <li class="page-item" th:classappend="${paging.last} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{/diary/list(page=${paging.number+1}, kw=${kw}, searchType=${searchType}, sort=${sort})}">»</a>
+            </li>
+        </ul>
     </div>
 
 </div>

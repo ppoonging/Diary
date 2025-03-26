@@ -1,0 +1,41 @@
+name: CI/CD Deploy to EC2
+
+on:
+  push:
+    branches: [ "main" ]  # main 브랜치에 push될 때 자동 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Upload JAR to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: 3.38.13.239
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: "build/libs/*.jar"
+          target: "~/"
+
+      - name: Restart Spring Boot on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: 3.38.13.239
+          username: ubuntu
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            pkill -f 'java -jar' || true
+            nohup java -jar ~/diary-0.0.1-SNAPSHOT.jar > log.txt 2>&1 &

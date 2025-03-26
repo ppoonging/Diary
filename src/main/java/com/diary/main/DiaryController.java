@@ -32,8 +32,10 @@ public class DiaryController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
-    public String diaryCreate(DiaryForm diaryForm,@RequestParam(name = "selectedDate" ,required = false) String selectedDate,Model model) {
+    public String diaryCreate(DiaryForm diaryForm,@RequestParam(name = "selectedDate" ,required = false) String selectedDate,
+                             @RequestParam(name = "weather",required = false) String weather, Model model) {
         model.addAttribute("selectedDate", selectedDate);
+        model.addAttribute("weather", weather);//날씨 저장
         return "diary/diaryCreate_form";
     }
 
@@ -45,28 +47,12 @@ public class DiaryController {
             return "diary/diaryCreate_form";
         }
         SiteUser diaryUser = this.diaryUserSerevice.getUser(principal.getName());
-        Diary d = new Diary();
-            this.diaryService.createDiary(diaryForm.getSubject(), diaryForm.getContent(),diary.getSelectedDate(),diaryUser,d.getWeather());
+
+
+            this.diaryService.createDiary(diaryForm.getSubject(), diaryForm.getContent(),diary.getWeather(),diary.getSelectedDate(),diaryUser);
             return "redirect:/diary/list";
 
-
     }
-    /*주석
-    @GetMapping("/list/{id}")
-    @PreAuthorize("isAuthenticated()")
-    public String list(Model model,  Principal principal
-            ,@RequestParam(value = "page", defaultValue = "0") int page ) {
-        Page<Diary> p = this.diaryService.getList(page);
-        if(!p.get){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"저장된 데이터가 없습니다");
-        }
-        Page<Diary> paging =  this.diaryService.getList(page);
-        model.addAttribute("paging", paging);
-        this.diaryService.getList(page);
-        return String.format("redirect:/diary/list/%d");
-
-    }*/
-
 
      @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "page",defaultValue = "0") int page) {

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-5" style="background-color: #fffbea; border-radius: 15px; padding: 30px;">
+
+
+<div layout:fragment="content" class="container my-5" style="background-color: #fffbea; border-radius: 15px; padding: 40px;">
 
     <!-- 페이지 헤더 -->
     <div class="text-center mb-5">
@@ -12,26 +14,30 @@
     <section class="row justify-content-center gap-4">
 
         <!-- 오늘 일기 작성 카드 -->
-        <div class="card shadow-sm p-0" style="width: 18rem;">
-            <img th:src="@{/2025-01-04.01.jpeg}" class="card-img-top" alt="오늘 일기 이미지">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">오늘 일기</h5>
-                <p class="card-text">일기를 작성하는 건 하루를 마무리하는 소중한 습관입니다.</p>
-                <a th:href="@{/diary/create}" class="btn btn-primary mt-auto">하루를 마무리</a>
+        <div class="card1 shadow-sm p-0" style="width: 18rem; height: 24rem;">
+            <img th:src="@{/2025-01-04.01.jpeg}" class="card-img-top"
+                 style="height: 13rem; object-fit: cover; border-top-left-radius: 20px; border-top-right-radius: 20px;"
+                 alt="오늘 일기 이미지">
+            <div class="card-body d-flex flex-column" style="height: 8rem;">
+                <h5 class="card-title1">✏️ 오늘 일기</h5>
+                <p class="card-text1">오늘의 느낌과 생각을 따뜻하게 남겨보세요.</p>
+                <a th:href="@{/diary/create}" class="btn btn1 mt-auto">하루를 마무리</a>
             </div>
         </div>
 
         <!-- 일기 목록 카드 -->
-        <div class="card shadow-sm p-0" style="width: 18rem;">
-            <img th:src="@{/2025-01-04.01.jpeg}" class="card-img-top" alt="일기 목록 이미지">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">일기 목록</h5>
-                <p class="card-text">지나온 나의 흔적을 되돌아보며 스스로를 더 이해해보세요.</p>
-                <a th:href="@{/diary/list}" class="btn btn-primary mt-auto">그날을 떠올리며</a>
+        <div class="card1 shadow-sm p-0" style="width: 18rem; height: 24rem;">
+            <img th:src="@{/2025-01-04.01.jpeg}" class="card-img-top"
+                 style="height: 13rem; object-fit: cover; border-top-left-radius: 20px; border-top-right-radius: 20px;"
+                 alt="일기 목록 이미지">
+            <div class="card-body d-flex flex-column" style="height: 8rem;">
+                <h5 class="card-title1">📖 일기 목록</h5>
+                <p class="card-text1">지나간 나를 돌아보며 마음을 다독여 보세요.</p>
+                <a th:href="@{/diary/list}" class="btn btn1 mt-auto">그날을 떠올리며</a>
             </div>
         </div>
 
     </section>
-
 </div>
+
 </html>

@@ -24,12 +24,13 @@ public class DiaryService {
     private final DiaryRepository diaryRepository;
 
 
-    public void createDiary(String subject, String content, LocalDate selectedDate, SiteUser siteUser,String weather) {
+    public void createDiary(String subject, String content,String weather, LocalDate selectedDate, SiteUser siteUser) {
         Diary d=new Diary();
         d.setAuthor(siteUser);
         d.setSubject(subject);
         d.setContent(content); // 줄바꿈 코드 content.replace("\n", "<br/>"));
         d.setWeather(weather);
+        d.setUsername(siteUser.getUsername());
         d.setSelectedDate(selectedDate);
         d.setCreateDateTime(LocalDateTime.now());
         this.diaryRepository.save(d);
