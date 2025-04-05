@@ -5,8 +5,8 @@
 
     <!-- 타이틀 -->
     <div class="text-center mb-5">
-        <h2 class="fw-bold">📚 나의 일기 목록</h2>
-        <p class="text-muted">기록해온 나의 순간들을 다시 만나보세요.</p>
+        <h2 class="fw-bold">📚 사람들의 일기 목록</h2>
+        <p class="text-muted">기록해온 사람들의 순간을 만나보세요.</p>
     </div>
     <div class="mood-score-box">
         <h3>오늘의 기분지수</h3>
@@ -65,7 +65,7 @@
 
                     <!-- 자세히 보기 버튼 (하단 우측) - 작성자만 보임 -->
                     <div class="mt-auto text-end">
-                        <a th:href="@{/diary/detail/{id}(id=${diary.id})}"
+                        <a th:if="${#authentication.name == diary.username}" th:href="@{/diary/detail/{id}(id=${diary.id})}"
                                 class="btn btn-outline-primary btn-sm">자세히 보기</a>
                     </div>
 

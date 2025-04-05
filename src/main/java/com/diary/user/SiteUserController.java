@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,39 +27,6 @@ public class SiteUserController {
 
 
     private final SiteUserSerevice siteUserSerevice;
-
-/*
-    private String ClientId ="Gl8whwhcFMnzNtBefoyT";
-    private String clientSecret="9cJxpUH8aU";
-
-    @GetMapping("/naverlogin")
-    public String GetLogin(){
-        return "naverLogin";
-    }
-
-    @PostMapping("/naverlogin")
-    public void pstLogin(HttpServletResponse response) throws IOException {
-        String basicUri="https://nid.naver.com/oauth2.0/authorize";
-        String uri= UriComponentsBuilder
-                .fromUriString(basicUri)
-                .queryParam("response_type","code")
-                .queryParam("client_id",ClientId)// 왜 여기는 ""가 안붙지.....
-                .queryParam("redirect_uri","http://localhost:8080/naver-login")
-                .queryParam("state" ,"1111")
-                .build().toString();
-        response.sendRedirect(uri);
-    }
-    @GetMapping("/naver-login")
-    public String getNaverLogin(@RequestParam("code") String code, @RequestParam("state") String state, Model  model, HttpSession session)  {
-
-        NaverUser user = new NaverUser(code,state);
-
-        session.setAttribute("loginUser",user);
-        model.addAttribute("loggedIn",user);
-        return "naverHome";
-
-    }*/
-
 
     @GetMapping("/signup")
     public String userCreate(SiteUserForm diaryUserForm) {
@@ -104,4 +73,6 @@ public class SiteUserController {
         model.addAttribute("siteUser", siteUser);
         return "ins/infor_form";
     }
-}
+
+    }
+

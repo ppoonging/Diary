@@ -8,29 +8,37 @@
         <p class="text-muted">하루를 돌아보며 기록을 남겨보세요.</p>
     </div>
 
+    <!-- 일기 작성/수정 폼 -->
+    <form th:action="@{${diaryId != null} ? '/diary/modify/' + ${diaryId} : '/diary/create'}"
+          method="post" th:object="${diaryForm}">
 
-    <!-- 일기 작성 폼 -->
-    <form th:action="@{/diary/create}" method="post" th:object="${diaryForm}">
+        <!-- CSRF 토큰 -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-        <!-- 날짜와 날씨 선택을 가로로 배치 -->
+        <!-- 날짜와 날씨 선택 -->
         <div class="d-flex gap-3 mb-4">
             <!-- 날짜 선택 -->
             <div class="flex-grow-1">
                 <label for="datepicker" class="form-label">🗓️ 날짜 선택</label>
-                <input type="text" class="form-control" id="datepicker" name="selectedDate" placeholder="날짜를 선택하세요" readonly>
+
+                <input type="text" class="form-control" id="datepicker" name="selectedDate"
+                       placeholder="날짜를 선택하세요" readonly
+                       th:value="${#temporals.format(selectedDate, 'yyyy-MM-dd')}" />
+              <!-- placeholder="날짜를 선택하세요" readonly th:value="${selectedDate}">-->
+                <!--주석으로 했는데 1925년으로 시작했음-->
                 <p id="dateMessage" class="text-muted small" style="font-style: italic; margin-top: 10px;">날짜를 선택해주세요.</p>
             </div>
 
             <!-- 날씨 선택 -->
             <div class="flex-grow-1">
                 <label for="weather" class="form-label">🌤️ 오늘의 날씨</label>
-                <select name="weather" id="weather" class="form-select">
+                <select th:field="*{weather}" id="weather" class="form-select">
                     <option value="">날씨를 선택하세요</option>
-                    <option value="맑음">맑음 ☀️</option>
-                    <option value="흐림">흐림 ☁️</option>
-                    <option value="비">비 ☔️</option>
-                    <option value="눈">눈 ❄️</option>
-                    <option value="바람">바람 💨</option>
+                    <option value="맑음" th:selected="${weather == '맑음'}">맑음 ☀️</option>
+                    <option value="흐림" th:selected="${weather == '흐림'}">흐림 ☁️</option>
+                    <option value="비" th:selected="${weather == '비'}">비 ☔️</option>
+                    <option value="눈" th:selected="${weather == '눈'}">눈 ❄️</option>
+                    <option value="바람" th:selected="${weather == '바람'}">바람 💨</option>
                 </select>
                 <p id="weatherMessage" class="text-muted small" style="font-style: italic; margin-top: 10px;">날씨를 선택해주세요.</p>
             </div>
@@ -39,23 +47,22 @@
         <!-- 제목 -->
         <div class="mb-4">
             <label for="subject" class="form-label">✏️ 제목</label>
-            <input type="text" name="subject" id="subject" class="form-control" placeholder="오늘의 제목은 무엇인가요?">
+            <input type="text" th:field="*{subject}" id="subject" class="form-control" placeholder="오늘의 제목은 무엇인가요?">
         </div>
 
         <!-- 내용 -->
         <div class="mb-4">
             <label for="content" class="form-label">📖 내용</label>
-            <textarea rows="12" name="content" id="content" class="form-control" placeholder="하루를 자유롭게 기록해보세요."></textarea>
+            <textarea rows="12" th:field="*{content}" id="content" class="form-control" placeholder="하루를 자유롭게 기록해보세요."></textarea>
         </div>
 
         <!-- 버튼 -->
         <div class="d-flex justify-content-center gap-3 mt-4">
-            <input type="submit" class="btn btn-primary px-4" value="일기 기록">
+            <input type="submit" class="btn btn-primary px-4"
+                   th:value="${diaryId != null} ? '수정 완료' : '일기 기록'">
             <a th:href="@{/diary/main}" class="btn btn-outline-secondary px-4">뒤로가기</a>
         </div>
     </form>
-
-
 </div>
 </html>
 
@@ -68,46 +75,22 @@
             autoclose: true,
             todayHighlight: true
         });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // 날짜 선택 시 메시지 출력
-        $('#datepicker').on('change', function() {
+
+        $('#datepicker').on('change', function () {
             let selectedDate = $(this).val();
-            if (selectedDate) {
-                $('#dateMessage').text('선택한 날짜: ' + selectedDate);
-            } else {
-                $('#dateMessage').text('날짜를 선택해주세요.');
-            }
+            $('#dateMessage').text(selectedDate ? '선택한 날짜: ' + selectedDate : '날짜를 선택해주세요.');
         });
 
-        // 날씨 선택 시 메시지 출력
-        $('#weather').on('change', function() {
+        $('#weather').on('change', function () {
             let selectedWeather = $(this).val();
-            let weatherMessage = '';
-
-            switch (selectedWeather) {
-                case '맑음':
-                    weatherMessage = '오늘의 기분은 맑고 화창한 날인가요?! ';
-                    break;
-                case '흐림':
-                    weatherMessage = '오늘의 기분은 꾸릉꾸릉 이네요. ';
-                    break;
-                case '비':
-                    weatherMessage = '오늘의 기분은 축~ 처지는 날이군요 ';
-                    break;
-                case '눈':
-                    weatherMessage = '오늘의 기분은 눈이 오는 설렘인가요?! ';
-                    break;
-                case '바람':
-                    weatherMessage = '오늘의 기분은 바람이 몰아쳤나요?';
-                    break;
-                default:
-                    weatherMessage = '날씨를 선택해주세요.';
-            }
-
-            $('#weatherMessage').text(weatherMessage);
+            let msg = {
+                '맑음': '오늘의 기분은 맑고 화창한 날인가요?! ',
+                '흐림': '오늘의 기분은 꾸릉꾸릉 이네요. ',
+                '비': '오늘의 기분은 축~ 처지는 날이군요 ',
+                '눈': '오늘의 기분은 눈이 오는 설렘인가요?! ',
+                '바람': '오늘의 기분은 바람이 몰아쳤나요?'
+            };
+            $('#weatherMessage').text(msg[selectedWeather] || '날씨를 선택해주세요.');
         });
     });
 </script>

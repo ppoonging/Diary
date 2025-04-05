@@ -9,5 +9,5 @@ public interface SiteUserRepository extends JpaRepository<SiteUser,Integer> {
 
 
     Optional<SiteUser> findByUsername(String username);
-
+    Optional<SiteUser> findByEmail(String email);
 }

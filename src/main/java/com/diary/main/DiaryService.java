@@ -125,5 +125,16 @@ public class DiaryService {
         return calculateMoodScore(weather);
     }
 
+    /*수정 서비스*/
+
+    public void modify(Diary d, String subject, String content, String weather, LocalDate selectedDate) {
+        d.setSubject(subject);
+        d.setContent(content);
+        d.setWeather(weather);
+        d.setSelectedDate(selectedDate);
+        d.setModifyDateTime(LocalDateTime.now());/* 수정한 날짜로 변경*/
+        this.diaryRepository.save(d);
+    }
+
 
 }

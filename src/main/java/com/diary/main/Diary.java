@@ -27,9 +27,11 @@ public class Diary {
     private String weather;
 
     @ManyToOne
-    private SiteUser author;
+    private SiteUser author; /*이걸 기준으로 수정 권한 가져올거*/
 
     private LocalDateTime createDateTime; /*작성일*/
+
+    private LocalDateTime modifyDateTime; /*수정일*/
 
     private LocalDate selectedDate;/*일기날짜*/
 
