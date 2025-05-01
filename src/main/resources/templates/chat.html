@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatGPT 질문하기</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSRF 토큰 정보 -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="mb-4">ChatGPT에게 질문해보세요 🧠</h2>
+
+    <div class="mb-3">
+        <label for="question" class="form-label">질문</label>
+        <input type="text" class="form-control" id="question" placeholder="예: 오늘 날씨 어때?" required>
+    </div>
+    <button id="askBtn" class="btn btn-primary">질문하기</button>
+
+    <hr>
+
+    <div id="result" style="display:none;">
+        <h5 class="mt-4">🙋 질문:</h5>
+        <p id="qText"></p>
+
+        <h5 class="mt-3">🤖 답변:</h5>
+        <div class="border p-3 bg-white rounded">
+            <p id="aText"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        const token = $("meta[name='_csrf']").attr("content");
+        const header = $("meta[name='_csrf_header']").attr("content");
+
+        $("#askBtn").click(function () {
+            const question = $("#question").val().trim();
+            if (!question) {
+                alert("질문을 입력해주세요!");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/api/chat/ask",
+                data: { question: question },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (response) {
+                    $("#qText").text(question);
+                    $("#aText").text(response);
+                    $("#result").show();
+                },
+                error: function () {
+                    alert("ChatGPT 호출 중 오류가 발생했습니다.");
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
