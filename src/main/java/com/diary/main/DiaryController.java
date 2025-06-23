@@ -128,7 +128,7 @@ public class DiaryController {
     @PreAuthorize("isAuthenticated()")
     public String modifyDiary(@Valid DiaryForm diaryForm, BindingResult bindingResult,
                               @PathVariable("id") Integer id,
-                              @RequestParam("selectedDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectedDate,
+                              @RequestParam("selectedDate") LocalDate selectedDate,
                               @RequestParam("weather") String weather,
                               Principal principal) {
 

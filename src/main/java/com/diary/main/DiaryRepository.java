@@ -22,9 +22,10 @@ public interface DiaryRepository extends JpaRepository<Diary, String> {
 
     /*오늘 기분지수*/
     //DATE(d.createDateTime) ← 이건 MySQL 문법
-    //Oracle에서는 DATE() 함수 안 씀 → TRUNC(...)를 써야 해
-    @Query(value = "SELECT weather FROM diary WHERE TRUNC(create_date_time) = TRUNC(SYSDATE)", nativeQuery = true)
+
+    @Query(value = "SELECT weather FROM diary WHERE DATE(create_date_time) = CURDATE()", nativeQuery = true)
     List<String> findTodayWeathers();
+
 
 
     /*로그인한 유져*/

@@ -17,18 +17,20 @@ public class Diary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(length = 30)
     private String username;
     @Column(length = 30)
     private String subject;
-    @Lob
+
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private String weather;
 
     @ManyToOne
     private SiteUser author; /*이걸 기준으로 수정 권한 가져올거*/
-    @Column(name = "create_date_time")
+
     private LocalDateTime createDateTime; /*작성일*/
 
     private LocalDateTime modifyDateTime; /*수정일*/
