@@ -13,8 +13,7 @@ public class SiteUser {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "site_user_seq")
-    @SequenceGenerator(name = "site_user_seq", sequenceName = "site_user_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     @Column(unique = true)

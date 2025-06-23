@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 public class Diary {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "diary_seq")
-    @SequenceGenerator(name = "diary_seq",sequenceName = "diary_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(length = 30)
     private String username;

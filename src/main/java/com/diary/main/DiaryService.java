@@ -92,17 +92,17 @@ public class DiaryService {
         LocalDate now = LocalDate.now();
         LocalDate start = now.withDayOfMonth(1);
         LocalDate end = now.withDayOfMonth(now.lengthOfMonth());
-        System.out.println("유저: " + username);
+        System.out.println("@@@@@@@@@유저: " + username);
 
         List<String> weather = diaryRepository.findWeathersByUserAndMonth(username, start, end);
         return calculateMoodScore(weather);
     }
     /*계산방식 이번달 작성자 기분*/
     public int calculateMoodScore(List<String> weathers) {
-        int total = 0;
-        int count = 0;
+        int total = 0; //변수 설정
+        int count = 0; //
         for (String weather : weathers) {
-            if (weather == null) continue;  // null 체크 추가
+            if (weather == null) continue;  // null 체크 추가 애러코드 대비!!
 
             switch (weather) {
                 case "맑음" -> total += 5;
