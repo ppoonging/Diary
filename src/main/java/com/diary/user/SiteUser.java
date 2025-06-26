@@ -12,7 +12,6 @@ import lombok.Setter;
 @Table(name = "site_user")
 public class SiteUser {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
