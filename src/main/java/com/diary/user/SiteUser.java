@@ -33,7 +33,7 @@ public class SiteUser {
     @Column(unique = true)
     private String phoneNumber;
 
-    @Column
+
     private String provider;  // 소셜 로그인 플랫폼: naver, google
 
     // 네이버 사용자 생성용 생성자
