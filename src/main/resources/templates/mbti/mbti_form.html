@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+
+
+<div layout:fragment="content" class="container my-5" style="background-color: rgba(34,151,215,0.42); border-radius: 15px; padding: 40px;">
+
+<h2 class="text-center mb-4">MBTI 궁합 보기</h2>
+
+    <form action="/mbti/result" method="get">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h5>남자 MBTI 선택</h5>
+                <select class="form-select" name="male" required>
+                    <option disabled selected>-- 선택하세요 --</option>
+                    <option>INTJ</option>
+                    <option>INTP</option>
+                    <option>ENTJ</option>
+                    <option>ENTP</option>
+                    <option>INFJ</option>
+                    <option>INFP</option>
+                    <option>ENFJ</option>
+                    <option>ENFP</option>
+                    <option>ISTJ</option>
+                    <option>ISFJ</option>
+                    <option>ESTJ</option>
+                    <option>ESFJ</option>
+                    <option>ISTP</option>
+                    <option>ISFP</option>
+                    <option>ESTP</option>
+                    <option>ESFP</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <h5>여자 MBTI 선택</h5>
+                <select class="form-select" name="female" required>
+                    <option disabled selected>-- 선택하세요 --</option>
+                    <option>INTJ</option>
+                    <option>INTP</option>
+                    <option>ENTJ</option>
+                    <option>ENTP</option>
+                    <option>INFJ</option>
+                    <option>INFP</option>
+                    <option>ENFJ</option>
+                    <option>ENFP</option>
+                    <option>ISTJ</option>
+                    <option>ISFJ</option>
+                    <option>ESTJ</option>
+                    <option>ESFJ</option>
+                    <option>ISTP</option>
+                    <option>ISFP</option>
+                    <option>ESTP</option>
+                    <option>ESFP</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-primary px-4" type="submit">궁합 보기</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
