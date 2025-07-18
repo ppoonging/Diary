@@ -63,6 +63,23 @@
             <a th:href="@{/diary/main}" class="btn btn-outline-secondary px-4">뒤로가기</a>
         </div>
     </form>
+
+    <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="validationModalLabel">입력 오류</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                </div>
+                <div class="modal-body" id="validationModalBody">
+                    <!-- 여기에 메시지가 동적으로 들어갑니다 -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </html>
 
@@ -90,7 +107,49 @@
                 '눈': '오늘의 기분은 눈이 오는 설렘인가요?! ',
                 '바람': '오늘의 기분은 바람이 몰아쳤나요?'
             };
-            $('#weatherMessage').text(msg[selectedWeather] || '날씨를 선택해주세요.');
+            $('#weatherMessage').text(msg[selectedWeather] || '기분을 선택해주세요.');
         });
     });
+    $('form').on('submit', function (e) {
+        const date = $('#datepicker').val();
+        const weather = $('#weather').val();
+        const subject = $('#subject').val().trim();
+        const content = $('#content').val().trim();
+
+        const showModal = (msg, focusTarget) => {
+            $('#validationModalBody').text(msg);
+            const modal = new bootstrap.Modal(document.getElementById('validationModal'));
+            modal.show();
+            // 모달 닫힌 후 focus 주기
+            $('#validationModal').on('hidden.bs.modal', function () {
+                $(focusTarget).focus();
+            });
+        };
+
+        if (!date) {
+            e.preventDefault();
+            showModal('날짜를 선택해주세요.', '#datepicker');
+            return;
+        }
+
+        if (!weather) {
+            e.preventDefault();
+            showModal('오늘의 기분을 날씨로 선택해주세요.', '#weather');
+            return;
+        }
+
+        if (!subject) {
+            e.preventDefault();
+            showModal('짧은 제목을 지어주세요.', '#subject');
+            return;
+        }
+
+        if (!content) {
+            e.preventDefault();
+            showModal('오늘을 입력해주세요.', '#content');
+            return;
+        }
+    });
+
+
 </script>
